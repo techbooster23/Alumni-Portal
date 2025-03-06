@@ -9,7 +9,7 @@ const Setting = () => {
 
     return (
         <>
-            <div className='px-8'>
+            <div className='px-4 md:px-8'>
                 <h1 className='text-3xl px-3 mt-3 font-semibold mb-6'>Settings</h1>
 
                 <div className='grid grid-cols-1 gap-6'>

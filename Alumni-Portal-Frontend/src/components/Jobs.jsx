@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { FiMoreVertical, FiEdit3, FiTrash2 } from "react-icons/fi";
 import { FaPenToSquare } from "react-icons/fa6";
 import { getDateString } from '../utils/timeConverter';
 
-const Jobs = ({ icon, job, managePost, btnText }) => {
+const Jobs = ({ icon, job, managePost, btnText, onViewMore }) => {
     const [jobData, setJobData] = useState(null);
 
     useEffect(() => {
@@ -31,16 +30,14 @@ const Jobs = ({ icon, job, managePost, btnText }) => {
                     </div>
                 </div>
 
-
-
                 <div className="w-full md:w-auto text-left md:text-right">
-                    <div className='flex items-center gap-8'>
+                    <div className='flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8'>
                         <div className="w-full md:w-auto text-left md:text-right">
                             <h2 className="text-sm sm:text-lg md:text-xl text-black">{getDateString(jobData.posted_date) || " "}</h2>
                             <p className="text-sm sm:text-base text-black">No of vacancies: {jobData.vacancies || " "}</p>
                         </div>
 
-                        <button className="btn bg-purple-100 border border-purple-700 text-[#5c0f8b] px-3 sm:px-6 py-2 rounded-lg w-full md:w-auto" onClick={() => document.getElementById('job-view-modal').showModal()}>{btnText}</button>
+                        <button className="btn bg-purple-100 border border-purple-700 text-[#5c0f8b] px-3 sm:px-6 py-2 rounded-lg w-full md:w-auto" onClick={onViewMore}>{btnText}</button>
 
                         {managePost && (
                             <div className="dropdown dropdown-end">

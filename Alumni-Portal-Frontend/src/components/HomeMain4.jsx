@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Jobs from './Jobs';
 import { Link } from 'react-router-dom';
 import API from '../api/backend.api';
+import JobDetailsModal from '../Job Details Component/JobDetailsModel';
 
 const HomeMain4 = () => {
     const [allJobs, setAllJobs] = useState([]); // Correctly destructure useState
     const [searchText, setSearchText] = useState("");
     const [filteredJobs, setFilteredJobs] = useState([]);
+    const [selectedJob, setSelectedJob] = useState(null); // State to hold the selected job for the modal
 
     const buttonStyle = {
         backgroundColor: '#E6E6FA', // Lavender color
@@ -31,6 +33,8 @@ const HomeMain4 = () => {
         getAllJobs();
     }, []);
 
+    console.log(allJobs)
+
     const handleSearchChange = (e) => {
         const searchValue = e.target.value.toLowerCase();
         setSearchText(searchValue);
@@ -39,12 +43,18 @@ const HomeMain4 = () => {
             job.title.toLowerCase().includes(searchValue) ||
             job.company.toLowerCase().includes(searchValue) || 
             job.type.toLowerCase().includes(searchValue)
-        )
+        );
 
         setFilteredJobs(filtered);
-        
-    }
+    };
 
+    const handleViewMore = (job) => {
+        setSelectedJob(job); // Set the selected job to display in the modal
+    };
+
+    const handleCloseModal = () => {
+        setSelectedJob(null); // Close the modal
+    };
 
     return (
         <div className="w-full md:w-[80%] min-h-screen py-22 px-5 bg-white">
@@ -82,9 +92,11 @@ const HomeMain4 = () => {
 
             <div className='mt-5'>
                 {filteredJobs.map((job) => (
-                    <Jobs key={job.id} job={job} btnText = "View More" />
+                    <Jobs key={job.id} job={job} btnText="View More" onViewMore={() => handleViewMore(job)} />
                 ))}
             </div>
+
+            {selectedJob && <JobDetailsModal job={selectedJob} onClose={handleCloseModal} />}
         </div>
     );
 }
