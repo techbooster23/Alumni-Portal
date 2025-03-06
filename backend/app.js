@@ -6,6 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user.routes.js';
 import jobRoutes from './routes/job.routes.js';
+import profileRoutes from './routes/profile.routes.js';
 
 
 const env = dotenv.config().parsed;
@@ -42,6 +43,8 @@ db.connect();
 app.use("/api/user", userRoutes);
 
 app.use("/job",jobRoutes);
+
+app.use("/profile",profileRoutes);
 
 app.listen(port,()=>{
     console.log("server is running at localhost " + port);
